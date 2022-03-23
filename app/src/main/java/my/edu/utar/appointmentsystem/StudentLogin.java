@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -38,12 +39,14 @@ public class StudentLogin extends AppCompatActivity {
         Button loginStudent_loginBtn = findViewById(R.id.loginStudent_loginBtn);
         EditText loginStudent_studentID = findViewById(R.id.loginStudent_studentID);
         EditText loginStudent_studentPassword = findViewById(R.id.loginStudent_studentPassword);
+        ProgressBar progressBar = findViewById(R.id.progressBar);
         loginStudent_loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String url = "http://10.0.2.2:8080/studentLogin";
                 String url2 = "https://appointmentmobileapi.herokuapp.com/studentLogin";
                 JSONObject jsonBody = new JSONObject();
+                progressBar.setVisibility(View.VISIBLE);
                 try {
                     jsonBody.put("studentID", loginStudent_studentID.getText().toString());
                     jsonBody.put("password", loginStudent_studentPassword.getText().toString());
@@ -56,7 +59,7 @@ public class StudentLogin extends AppCompatActivity {
 
                             @Override
                             public void onResponse(JSONObject response) {
-                                JSONObject json = null;
+                                progressBar.setVisibility(View.GONE);
                                 try {
                                     Toast.makeText(StudentLogin.this, response.getString("message"), Toast.LENGTH_LONG).show();
                                     /*
@@ -73,6 +76,7 @@ public class StudentLogin extends AppCompatActivity {
 
                             @Override
                             public void onErrorResponse(VolleyError error) {
+                                progressBar.setVisibility(View.GONE);
                                 try {
                                     byte[] htmlBodyBytes = error.networkResponse.data;
                                     JSONObject errorRes =new JSONObject(new String(htmlBodyBytes));

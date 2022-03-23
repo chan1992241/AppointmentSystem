@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -29,6 +30,7 @@ public class LecturerLogin extends AppCompatActivity {
         Button loginLecturer_loginBtn = findViewById(R.id.loginLecturer_loginBtn);
         EditText loginLecturer_lecturerID = findViewById(R.id.loginLecturer_lecturerID);
         EditText loginLecturer_lecturerPassword = findViewById(R.id.loginLecturer_lecturerPassword);
+        ProgressBar progressBar = findViewById(R.id.progressBar);
         loginLecturer_loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,15 +44,15 @@ public class LecturerLogin extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 final String requestBody = jsonBody.toString();
+                progressBar.setVisibility(View.VISIBLE);
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                         (Request.Method.POST, url2, null, new Response.Listener<JSONObject>() {
 
                             @Override
                             public void onResponse(JSONObject response) {
-                                JSONObject json = null;
+                                progressBar.setVisibility(View.GONE);
                                 try {
                                     Toast.makeText(LecturerLogin.this, response.getString("message"), Toast.LENGTH_LONG).show();
-
                                      /* TODO: route to main page
                                     Intent intent = new Intent(LecturerLogin.this, lecturerMainPage.class);
                                     intent.putExtra("lecturerID", response.getString("lecturerID"));
@@ -64,6 +66,7 @@ public class LecturerLogin extends AppCompatActivity {
 
                             @Override
                             public void onErrorResponse(VolleyError error) {
+                                progressBar.setVisibility(View.GONE);
                                 try {
                                     byte[] htmlBodyBytes = error.networkResponse.data;
                                     JSONObject errorRes =new JSONObject(new String(htmlBodyBytes));
