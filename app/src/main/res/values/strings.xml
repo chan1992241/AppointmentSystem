@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Appointment System</string>
+    <!--id-->
+    <item type="id" name="appointmentID" />
+    <item type="id" name="appointmentStatus" />
+    <item type="id" name="scheduleID" />
 </resources>

@@ -14,6 +14,12 @@
         android:theme="@style/Theme.AppointmentSystem"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".LecturerUpcoming"
+            android:exported="false" />
+        <activity
+            android:name=".LecturerMainPage"
+            android:exported="false" />
+        <activity
             android:name=".LecturerLogin"
             android:exported="false" />
         <activity
