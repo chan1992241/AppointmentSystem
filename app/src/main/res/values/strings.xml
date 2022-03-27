@@ -4,4 +4,7 @@
     <item type="id" name="appointmentID" />
     <item type="id" name="appointmentStatus" />
     <item type="id" name="scheduleID" />
+
+    <item type="id" name="appointmentDescription"/>
+    <item type="id" name="appointmentTitle"/>
 </resources>

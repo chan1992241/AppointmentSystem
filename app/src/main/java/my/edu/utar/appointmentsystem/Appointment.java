@@ -10,17 +10,19 @@ public class Appointment {
     private String status;
     private Student student;
     private Lecturer lecturer;
+    private String description;
 
     public Appointment() {
     }
 
-    public Appointment(String ID, String title, Schedule schedule, String status, Student student, Lecturer lecturer) {
+    public Appointment(String ID, String title, Schedule schedule, String status, Student student, Lecturer lecturer, String description) {
         this.ID = ID;
         this.title = title;
         this.schedule = schedule;
         this.status = status;
         this.student = student;
         this.lecturer = lecturer;
+        this.description = description;
     }
 
     public Appointment(JSONObject appointmentObject) throws JSONException {
@@ -30,6 +32,7 @@ public class Appointment {
         this.status = appointmentObject.getString("status");
         this.student = new Student(appointmentObject.getJSONObject("studentID"));
         this.lecturer = new Lecturer(appointmentObject.getJSONObject("lecturerID"));
+        this.description = appointmentObject.getString("description");
     }
 
     public String getID() {
@@ -79,4 +82,8 @@ public class Appointment {
     public void setLecturer(Lecturer lecturer) {
         this.lecturer = lecturer;
     }
+
+    public String getDescription(){return description;}
+
+    public void setDescription(String description){this.description = description;}
 }

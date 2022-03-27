@@ -78,7 +78,7 @@ public class LecturerMainPage extends AppCompatActivity {
                             } else {
                                 Log.e("Appointment Length", "formatResponse: " + appointmentData.size());
                                 ListView bookingList = (ListView) findViewById(R.id.lecturer_booking_list);
-                                BookingAdapter bookingAdapter = new BookingAdapter(LecturerMainPage.this, appointmentData);
+                                BookingAdapter bookingAdapter = new BookingAdapter(LecturerMainPage.this, appointmentData, lecturerID);
                                 bookingList.setAdapter(bookingAdapter);
                             }
                         } catch (JSONException e) {
