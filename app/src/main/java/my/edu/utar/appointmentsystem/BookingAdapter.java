@@ -100,16 +100,12 @@ public class BookingAdapter extends ArrayAdapter<String> {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 String url2 = "https://appointmentmobileapi.herokuapp.com/deleteAppointment/" + view.getTag(R.id.appointmentID).toString();
                                 JSONObject jsonBody = new JSONObject();
-                                //jsonBody.put("lecturerID", loginLecturer_lecturerID.getText().toString());
-                                //jsonBody.put("password", loginLecturer_lecturerPassword.getText().toString());
                                 final String requestBody = jsonBody.toString();
-                                //progressBar.setVisibility(View.VISIBLE);
                                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                                         (Request.Method.POST, url2, null, new Response.Listener<JSONObject>() {
 
                                             @Override
                                             public void onResponse(JSONObject response) {
-                                                //progressBar.setVisibility(View.GONE);
                                                 try{
                                                     Toast.makeText(context, response.getString("message"), Toast.LENGTH_LONG).show();
                                                     Intent intent = new Intent(context, LecturerMainPage.class);
@@ -124,7 +120,6 @@ public class BookingAdapter extends ArrayAdapter<String> {
 
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
-                                                //progressBar.setVisibility(View.GONE);
                                                 try {
                                                     byte[] htmlBodyBytes = error.networkResponse.data;
                                                     JSONObject errorRes =new JSONObject(new String(htmlBodyBytes));
@@ -172,23 +167,19 @@ public class BookingAdapter extends ArrayAdapter<String> {
                         builder1.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                String url = "http://10.0.2.2:8080/lecturerLogin";
                                 String url2 = "https://appointmentmobileapi.herokuapp.com/changeAppointmentStatus/" + view.getTag(R.id.appointmentID).toString();
                                 JSONObject jsonBody = new JSONObject();
                                 try {
                                     jsonBody.put("status", "accepted");
-                                    //jsonBody.put("password", loginLecturer_lecturerPassword.getText().toString());
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                                 final String requestBody = jsonBody.toString();
-                                //progressBar.setVisibility(View.VISIBLE);
                                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                                         (Request.Method.POST, url2, null, new Response.Listener<JSONObject>() {
 
                                             @Override
                                             public void onResponse(JSONObject response) {
-                                                //progressBar.setVisibility(View.GONE);
                                                 try {
                                                     Toast.makeText(context, response.getString("message"), Toast.LENGTH_LONG).show();
                                                     Intent intent = new Intent(context, LecturerMainPage.class);
@@ -237,23 +228,19 @@ public class BookingAdapter extends ArrayAdapter<String> {
                         builder1.setNegativeButton("Reject", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                String url = "http://10.0.2.2:8080/lecturerLogin";
                                 String url2 = "https://appointmentmobileapi.herokuapp.com/changeAppointmentStatus/" + view.getTag(R.id.appointmentID).toString();
                                 JSONObject jsonBody = new JSONObject();
                                 try {
                                     jsonBody.put("status", "rejected");
-                                    //jsonBody.put("password", loginLecturer_lecturerPassword.getText().toString());
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                                 final String requestBody = jsonBody.toString();
-                                //progressBar.setVisibility(View.VISIBLE);
                                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                                         (Request.Method.POST, url2, null, new Response.Listener<JSONObject>() {
 
                                             @Override
                                             public void onResponse(JSONObject response) {
-                                                //progressBar.setVisibility(View.GONE);
                                                 try {
                                                     Toast.makeText(context, response.getString("message"), Toast.LENGTH_LONG).show();
                                                     Intent intent = new Intent(context, LecturerMainPage.class);
