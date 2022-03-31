@@ -26,6 +26,9 @@
             android:name=".LecturerUpcoming"
             android:exported="false" />
         <activity
+            android:name=".UploadSchedule"
+            android:exported="false" />
+        <activity
             android:name=".LecturerMainPage"
             android:exported="false" />
         <activity
