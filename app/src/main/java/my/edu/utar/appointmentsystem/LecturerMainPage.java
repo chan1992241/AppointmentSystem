@@ -42,7 +42,28 @@ public class LecturerMainPage extends AppCompatActivity {
     // inflate menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
+        super.onCreateOptionsMenu(menu);
+        //getMenuInflater().inflate(R.menu.main,menu);
+        Intent intent1 = getIntent();
+        String lecturerID = intent1.getStringExtra("lecturerID");
+
+        Intent intent = new Intent(LecturerMainPage.this, LecturerUpcoming.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("lecturerID", lecturerID);
+        menu.add("Upcoming Booking").setIntent(intent);
+
+        Intent intent2 = new Intent(LecturerMainPage.this, UploadSchedule.class);
+        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent2.putExtra("lecturerID", lecturerID);
+        menu.add("Upload Schedule").setIntent(intent2);
+
+        Intent intent3 = new Intent(LecturerMainPage.this, LecturerMainPage.class);
+        intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent3.putExtra("lecturerID", lecturerID);
+        menu.add("My booking").setIntent(intent3);
+
+
+        return true;
     }
 
     // menu item selected

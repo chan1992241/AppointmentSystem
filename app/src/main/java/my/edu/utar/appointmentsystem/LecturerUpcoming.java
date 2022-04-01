@@ -42,7 +42,28 @@ public class LecturerUpcoming extends AppCompatActivity {
     // inflate menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
+
+        super.onCreateOptionsMenu(menu);
+        Intent intent = getIntent();
+        String lecturerID = intent.getStringExtra("lecturerID");
+        System.out.println(lecturerID);
+
+        Intent intent1 = new Intent(LecturerUpcoming.this, LecturerUpcoming.class);
+        intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent1.putExtra("lecturerID", lecturerID);
+        menu.add("Upcoming Booking").setIntent(intent1);
+
+        Intent intent2 = new Intent(LecturerUpcoming.this, UploadSchedule.class);
+        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent2.putExtra("lecturerID", lecturerID);
+        menu.add("Upload Schedule").setIntent(intent2);
+
+        Intent intent3 = new Intent(LecturerUpcoming.this, LecturerMainPage.class);
+        intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent3.putExtra("lecturerID", lecturerID);
+        menu.add("My booking").setIntent(intent3);
+
+        return true;
     }
 
     // menu item selected
@@ -56,7 +77,7 @@ public class LecturerUpcoming extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         Intent intent = getIntent();
         String lecturerID = intent.getStringExtra("lecturerID");
-        String url2 = "https://appointmentmobileapi.herokuapp.com/listAllBookingLecturer/" + lecturerID;
+        String url2 = "https://appointmentmobileapi.herokuapp.com/listUpcomingBookingLecturer/" + lecturerID;
 //        String url2 = "https://appointmentmobileapi.herokuapp.com/listUpcomingBookingLecturer/623f0b0f53bea9bf72cc44ae";
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
                 (Request.Method.GET, url2, null, new Response.Listener<JSONArray>() {
