@@ -53,7 +53,6 @@ public class LecturerLogin extends AppCompatActivity {
                                 progressBar.setVisibility(View.GONE);
                                 try {
                                     Toast.makeText(LecturerLogin.this, response.getString("message"), Toast.LENGTH_LONG).show();
-                                     /* TODO: route to main page */
                                     Intent intent = new Intent(LecturerLogin.this, LecturerMainPage.class);
                                     intent.putExtra("lecturerID", response.getString("lecturerID"));
                                     intent.putExtra("role", "lecturer");

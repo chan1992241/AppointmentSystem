@@ -6,7 +6,7 @@
     android:padding="10dp">
 
     <TextView
-        android:id="@+id/lecturer_appointment_title"
+        android:id="@+id/student_appointment_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""
@@ -15,7 +15,7 @@
         android:paddingVertical="5dp"/>
 
     <TextView
-        android:id="@+id/lecturer_time"
+        android:id="@+id/student_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""
@@ -23,7 +23,7 @@
         android:paddingVertical="2dp"/>
 
     <TextView
-        android:id="@+id/lecturer_duration"
+        android:id="@+id/student_duration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""
@@ -31,7 +31,7 @@
         android:paddingVertical="2dp"/>
 
     <TextView
-        android:id="@+id/student_name"
+        android:id="@+id/lecturer_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""
@@ -39,7 +39,7 @@
         android:paddingVertical="2dp"/>
 
     <Button
-        android:id="@+id/lecturer_action_btn"
+        android:id="@+id/student_action_btn"
         android:layout_width="150dp"
         android:layout_height="wrap_content"/>
 

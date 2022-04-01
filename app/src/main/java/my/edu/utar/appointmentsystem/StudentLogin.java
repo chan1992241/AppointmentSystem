@@ -62,12 +62,11 @@ public class StudentLogin extends AppCompatActivity {
                                 progressBar.setVisibility(View.GONE);
                                 try {
                                     Toast.makeText(StudentLogin.this, response.getString("message"), Toast.LENGTH_LONG).show();
-                                    /*
-                                     * TODO: route to main page
-                                    Intent intent = new Intent(StudentLogin.this, studentMainPage.class);
+
+                                    Intent intent = new Intent(StudentLogin.this, StudentMainPage.class);
                                     intent.putExtra("studentID", response.getString("studentID"));
-                                    intent.putExtra("role", "lecturer");
-                                    startActivity(intent); */
+                                    intent.putExtra("role", "student");
+                                    startActivity(intent);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
