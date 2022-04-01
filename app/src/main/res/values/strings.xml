@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Appointment System</string>
     <!--id-->
-    <item type="id" name="appointmentID" />
-    <item type="id" name="appointmentStatus" />
-    <item type="id" name="scheduleID" />
+    <item name="appointmentID" type="id" />
+    <item name="appointmentStatus" type="id" />
+    <item name="scheduleID" type="id" />
 
-    <item type="id" name="appointmentDescription"/>
-    <item type="id" name="appointmentTitle"/>
+    <item name="appointmentDescription" type="id" />
+    <item name="appointmentTitle" type="id" />
 </resources>

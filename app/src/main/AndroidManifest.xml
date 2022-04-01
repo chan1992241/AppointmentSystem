@@ -14,6 +14,15 @@
         android:theme="@style/Theme.AppointmentSystem"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".MakeAppointment"
+            android:exported="false" />
+        <activity
+            android:name=".StudentUpcoming"
+            android:exported="false" />
+        <activity
+            android:name=".StudentMainPage"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -40,11 +49,13 @@
         <activity
             android:name=".roleSelection"
             android:exported="true">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
 
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
 
         <meta-data
