@@ -30,6 +30,14 @@
         android:textSize="12sp"
         android:paddingVertical="2dp"/>
 
+    <TextView
+        android:id="@+id/student_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="12sp"
+        android:paddingVertical="2dp"/>
+
     <Button
         android:id="@+id/lecturer_action_btn"
         android:layout_width="150dp"

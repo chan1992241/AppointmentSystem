@@ -59,11 +59,13 @@ public class BookingAdapter extends ArrayAdapter<String> {
         TextView lecturerAppointmentTitle = (TextView) bookingEntry.findViewById(R.id.lecturer_appointment_title);
         TextView lecturerTime = (TextView) bookingEntry.findViewById(R.id.lecturer_time);
         TextView lecturerDuration = (TextView) bookingEntry.findViewById(R.id.lecturer_duration);
+        TextView studentName = (TextView) bookingEntry.findViewById(R.id.student_name);
         Button lecturerActionBtn = (Button)  bookingEntry.findViewById(R.id.lecturer_action_btn);
 
         lecturerAppointmentTitle.setText(appointment.getTitle());
         lecturerTime.setText(formatDateTime(appointment.getSchedule().getDateTime()));
         lecturerDuration.setText("Duration: " + appointment.getSchedule().getDuration() + " minutes");
+        studentName.setText("Student: " + appointment.getStudent().getName());
         lecturerActionBtn.setText(appointment.getStatus());
         lecturerActionBtn.setTag(R.id.appointmentID, appointment.getID());
         lecturerActionBtn.setTag(R.id.scheduleID, appointment.getSchedule().getID());
@@ -162,7 +164,8 @@ public class BookingAdapter extends ArrayAdapter<String> {
                         AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
                         builder1.setTitle(view.getTag(R.id.appointmentTitle).toString());
                         builder1.setMessage(view.getTag(R.id.appointmentDescription).toString());
-                        builder1.setCancelable(false);
+                        // no cancel button is provided. if set to false, there is no way to close the dialog.
+//                        builder1.setCancelable(false);
 
                         builder1.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                             @Override
