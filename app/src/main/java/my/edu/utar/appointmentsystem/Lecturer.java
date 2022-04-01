@@ -11,15 +11,17 @@ public class Lecturer {
     private String lecturerID;
     private String password;
     private String[] schedules;
+    private String name;
 
     public Lecturer() {
     }
 
-    public Lecturer(String ID, String lecturerID, String password, String[] schedules) {
+    public Lecturer(String ID, String lecturerID, String password, String[] schedules, String name) {
         this.ID = ID;
         this.lecturerID = lecturerID;
         this.password = password;
         this.schedules = schedules;
+        this.name = name;
     }
 
     public Lecturer(JSONObject lecturerObject) throws JSONException {
@@ -27,6 +29,7 @@ public class Lecturer {
         this.lecturerID = lecturerObject.getString("lecturerID");
         this.password = lecturerObject.getString("password");
         this.schedules = getStringArray(lecturerObject.getJSONArray("schedules"));
+        this.name = lecturerObject.getString("name");
     }
 
     private String[] getStringArray(JSONArray schedules) throws JSONException {
@@ -67,5 +70,13 @@ public class Lecturer {
 
     public void setSchedules(String[] schedules) {
         this.schedules = schedules;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
