@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -66,6 +67,25 @@ public class UploadSchedule extends AppCompatActivity {
 
             }
         });
+        et_date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean focus) {
+                if (focus) {
+                    et_date.callOnClick();
+                }
+            }
+        });
+        et_date.setInputType(InputType.TYPE_NULL);
+
+        et_time.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean focus) {
+                if (focus) {
+                    et_time.callOnClick();
+                }
+            }
+        });
+        et_time.setInputType(InputType.TYPE_NULL);
 
 
         upload_Schedule.setOnClickListener(new View.OnClickListener() {
