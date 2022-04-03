@@ -1,17 +1,31 @@
 package my.edu.utar.appointmentsystem;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -63,10 +77,89 @@ public class BookingAdapter2 extends ArrayAdapter<String> {
                 // Android Small - 15
                 switch (view.getTag(R.id.appointmentStatus).toString()) {
                     case "accepted":
+                        AlertDialog.Builder builder = new AlertDialog.Builder((context));
+                        builder.setTitle(view.getTag(R.id.appointmentTitle).toString());
+                        builder.setMessage(view.getTag(R.id.appointmentDescription).toString());
+                        builder.setCancelable(false);
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                        AlertDialog dialogBox = builder.create();
+                        dialogBox.show();
                         break;
+                    case "pending":
                     case "rejected":
                     case "end":
-                    case "pending":
+                        AlertDialog.Builder builder2 = new AlertDialog.Builder(context);
+                        builder2.setTitle(view.getTag(R.id.appointmentTitle).toString());
+                        builder2.setMessage(view.getTag(R.id.appointmentDescription).toString());
+                        builder2.setCancelable(false);
+
+                        builder2.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String url2 = "https://appointmentmobileapi.herokuapp.com/deleteAppointment/" + view.getTag(R.id.appointmentID).toString();
+                                JSONObject jsonBody = new JSONObject();
+                                final String requestBody = jsonBody.toString();
+                                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                                        (Request.Method.POST, url2, null, new Response.Listener<JSONObject>() {
+
+                                            @Override
+                                            public void onResponse(JSONObject response) {
+                                                try{
+                                                    Toast.makeText(context, response.getString("message"), Toast.LENGTH_LONG).show();
+                                                    Intent intent = new Intent(context, StudentMainPage.class);
+                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                    intent.putExtra("studentID", Student_ID);
+                                                    context.startActivity(intent);
+                                                }catch( JSONException e){
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        }, new Response.ErrorListener() {
+
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                try {
+                                                    byte[] htmlBodyBytes = error.networkResponse.data;
+                                                    JSONObject errorRes =new JSONObject(new String(htmlBodyBytes));
+                                                    Toast.makeText(context, errorRes.getString("message"), Toast.LENGTH_SHORT).show();
+                                                    System.out.println(errorRes.getString("status"));
+                                                } catch (Exception e) {
+                                                    System.out.println(e.getMessage());
+                                                }
+                                            }
+                                        }) {
+                                    @Override
+                                    public String getBodyContentType() {
+                                        return "application/json; charset=utf-8";
+                                    }
+
+                                    @Override
+                                    public byte[] getBody() {
+                                        try {
+                                            return requestBody == null ? null : requestBody.getBytes("utf-8");
+                                        } catch (UnsupportedEncodingException uee) {
+                                            VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                                            return null;
+                                        }
+                                    }
+                                };
+                                VolleySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
+                            }
+                        });
+
+                        builder2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                        AlertDialog dialogBox2 = builder2.create();
+                        dialogBox2.show();
                         break;
                 }
             }
