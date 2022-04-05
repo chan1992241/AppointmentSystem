@@ -113,6 +113,7 @@ public class UploadSchedule extends AppCompatActivity {
                                 try {
                                     Toast.makeText(UploadSchedule.this, response.getString("message"), Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(UploadSchedule.this, LecturerMainPage.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     intent.putExtra("lecturerID", lecturerID);
                                     intent.putExtra("role", "lecturer");
                                     startActivity(intent);
@@ -168,17 +169,17 @@ public class UploadSchedule extends AppCompatActivity {
         System.out.println(lecturerID);
 
         Intent intent = new Intent(UploadSchedule.this, LecturerUpcoming.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("lecturerID", lecturerID);
         menu.add("Upcoming Booking").setIntent(intent);
 
         Intent intent2 = new Intent(UploadSchedule.this, UploadSchedule.class);
-        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent2.putExtra("lecturerID", lecturerID);
         menu.add("Upload Schedule").setIntent(intent2);
 
         Intent intent3 = new Intent(UploadSchedule.this, LecturerMainPage.class);
-        intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent3.putExtra("lecturerID", lecturerID);
         menu.add("My booking").setIntent(intent3);
 

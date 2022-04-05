@@ -42,7 +42,29 @@ public class StudentUpcoming extends AppCompatActivity {
     // inflate menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
+        super.onCreateOptionsMenu(menu);
+
+
+        Intent intent1 = getIntent();
+        String studentID = intent1.getStringExtra("studentID");
+
+        Intent intent = new Intent(StudentUpcoming.this, StudentUpcoming.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("studentID", studentID);
+        menu.add("Upcoming Booking").setIntent(intent);
+
+        Intent intent2 = new Intent(StudentUpcoming.this, MakeAppointment.class);
+        intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent2.putExtra("studentID", studentID);
+        menu.add("Make Appointment").setIntent(intent2);
+
+        Intent intent3 = new Intent(StudentUpcoming.this, StudentMainPage.class);
+        intent3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent3.putExtra("studentID", studentID);
+        menu.add("My booking").setIntent(intent3);
+
+
+        return true;
     }
 
     // menu item selected

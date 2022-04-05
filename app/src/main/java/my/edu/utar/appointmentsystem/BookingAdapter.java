@@ -3,6 +3,7 @@ package my.edu.utar.appointmentsystem;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +27,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class BookingAdapter extends ArrayAdapter<String> {
@@ -63,7 +68,11 @@ public class BookingAdapter extends ArrayAdapter<String> {
         Button lecturerActionBtn = (Button)  bookingEntry.findViewById(R.id.lecturer_action_btn);
 
         lecturerAppointmentTitle.setText(appointment.getTitle());
-        lecturerTime.setText(formatDateTime(appointment.getSchedule().getDateTime()));
+        try {
+            lecturerTime.setText(formatDateTime(appointment.getSchedule().getDateTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         lecturerDuration.setText("Duration: " + appointment.getSchedule().getDuration() + " minutes");
         studentName.setText("Student: " + appointment.getStudent().getName());
         lecturerActionBtn.setText(appointment.getStatus());
@@ -298,11 +307,20 @@ public class BookingAdapter extends ArrayAdapter<String> {
         return bookingEntry;
     }
 
-    private String formatDateTime(String dateTime) {
-        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
-        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("EEEE (dd-MM-yyyy) h:mm a", Locale.getDefault());
-        LocalDateTime datetime = LocalDateTime.parse(dateTime, inputFormatter);
-        String formattedDatetime = outputFormatter.format(datetime);
-        return formattedDatetime;
+    private String formatDateTime(String dateTime) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        Date date = sdf.parse(dateTime);
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.HOUR, 8);
+        Date newDate = c.getTime();
+        sdf.applyPattern("EEEE (dd-MM-yyyy) h:mm a");
+        String newDateString = sdf.format(newDate);
+        return newDateString;
+//        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+//        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("EEEE (dd-MM-yyyy) h:mm a", Locale.getDefault());
+//        LocalDateTime datetime = LocalDateTime.parse(dateTime, inputFormatter);
+//        String formattedDatetime = outputFormatter.format(datetime);
+//        return formattedDatetime;
     }
 }

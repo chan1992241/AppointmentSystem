@@ -49,17 +49,17 @@ public class LecturerUpcoming extends AppCompatActivity {
         System.out.println(lecturerID);
 
         Intent intent1 = new Intent(LecturerUpcoming.this, LecturerUpcoming.class);
-        intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent1.putExtra("lecturerID", lecturerID);
         menu.add("Upcoming Booking").setIntent(intent1);
 
         Intent intent2 = new Intent(LecturerUpcoming.this, UploadSchedule.class);
-        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent2.putExtra("lecturerID", lecturerID);
         menu.add("Upload Schedule").setIntent(intent2);
 
         Intent intent3 = new Intent(LecturerUpcoming.this, LecturerMainPage.class);
-        intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent3.putExtra("lecturerID", lecturerID);
         menu.add("My booking").setIntent(intent3);
 

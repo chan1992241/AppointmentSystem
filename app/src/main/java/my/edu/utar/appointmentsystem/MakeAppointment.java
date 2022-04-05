@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class MakeAppointment extends AppCompatActivity {
 
     private ArrayList<Lecturer> lecturerData;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +42,29 @@ public class MakeAppointment extends AppCompatActivity {
     // inflate menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
+        super.onCreateOptionsMenu(menu);
+
+
+        Intent intent1 = getIntent();
+        String studentID = intent1.getStringExtra("studentID");
+
+        Intent intent = new Intent(MakeAppointment.this, StudentUpcoming.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("studentID", studentID);
+        menu.add("Upcoming Booking").setIntent(intent);
+
+        Intent intent2 = new Intent(MakeAppointment.this, MakeAppointment.class);
+        intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent2.putExtra("studentID", studentID);
+        menu.add("Make Appointment").setIntent(intent2);
+
+        Intent intent3 = new Intent(MakeAppointment.this, StudentMainPage.class);
+        intent3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent3.putExtra("studentID", studentID);
+        menu.add("My booking").setIntent(intent3);
+
+
+        return true;
     }
 
     // menu item selected
@@ -78,7 +100,7 @@ public class MakeAppointment extends AppCompatActivity {
                             } else {
                                 Log.e("Lecturer Length", "formatResponse: " + lecturerData.size());
                                 ListView bookingList = (ListView) findViewById(R.id.available_lecturer_list);
-                                LecturerAdapter lecturerAdapter = new LecturerAdapter(MakeAppointment.this, lecturerData, studentID);
+                                LecturerAdapter lecturerAdapter = new LecturerAdapter(MakeAppointment.this, lecturerData, studentID, response);
                                 bookingList.setAdapter(lecturerAdapter);
                             }
                         } catch (JSONException e) {

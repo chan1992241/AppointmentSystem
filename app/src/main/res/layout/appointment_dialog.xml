@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="2in"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/blue"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="20dp">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Appointment Schedule:"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+        <Spinner
+            android:id="@+id/scheduleSpinner"
+            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Appointment Title:"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+<!--        <EditText-->
+<!--            android:id="@+id/app_title"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:minHeight="40dp"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:inputType="text"-->
+<!--            android:padding="5dp"-->
+<!--            android:textColor="@color/white" />-->
+        <EditText
+            android:id="@+id/newAppointmentTitle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Appointment Description:"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+<!--        <EditText-->
+<!--            android:id="@+id/app_desc"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:ems="10"-->
+<!--            android:inputType="textMultiLine|text"-->
+<!--            android:lines="1"-->
+<!--            android:maxLength="2000"-->
+<!--            android:maxLines="4"-->
+<!--            android:minLines="4"-->
+<!--            android:padding="5dp"-->
+<!--            android:textColor="@color/white" />-->
+        <EditText
+            android:id="@+id/newAppointmentDesc"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <Button
+            android:id="@+id/send_appointment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/grey"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="Sent Appointment Request"
+            android:textColor="@color/black" />
+    </LinearLayout>
+

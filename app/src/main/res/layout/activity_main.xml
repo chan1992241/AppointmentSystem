@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/blue">
+    android:background="@color/light_blue">
 
     <ImageView
         android:id="@+id/appImage"
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/antic"
         android:text="Largest University Appointment Application"
-        android:textColor="@color/grey"
+        android:textColor="@color/red"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
