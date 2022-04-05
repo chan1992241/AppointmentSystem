@@ -94,63 +94,71 @@ public class UploadSchedule extends AppCompatActivity {
                 Intent intent = getIntent();
                 String lecturerID = intent.getStringExtra("lecturerID");
 
-                String url2 = "https://appointmentmobileapi.herokuapp.com/uploadSchedule/" + lecturerID;
-                JSONObject jsonBody = new JSONObject();
-                try {
-                    jsonBody.put("date", et_date.getText().toString().trim());
-                    jsonBody.put("time", et_time.getText().toString().trim());
-                    jsonBody.put("duration", uploadSchedule_duration.getText().toString().trim());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                final String requestBody = jsonBody.toString();
-                System.out.println(requestBody);
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                        (Request.Method.POST, url2, null, new Response.Listener<JSONObject>() {
+                String date = et_date.getText().toString().trim();
+                String time = et_time.getText().toString().trim();
+                String duration = uploadSchedule_duration.getText().toString().trim();
 
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    Toast.makeText(UploadSchedule.this, response.getString("message"), Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(UploadSchedule.this, LecturerMainPage.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    intent.putExtra("lecturerID", lecturerID);
-                                    intent.putExtra("role", "lecturer");
-                                    startActivity(intent);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                try {
-                                    byte[] htmlBodyBytes = error.networkResponse.data;
-                                    JSONObject errorRes =new JSONObject(new String(htmlBodyBytes));
-                                    Toast.makeText(UploadSchedule.this, errorRes.getString("message"), Toast.LENGTH_SHORT).show();
-                                    //System.out.println(errorRes.getString("status"));
-                                } catch (Exception e) {
-                                    System.out.println(e.getMessage());
-                                }
-                            }
-                        }) {
-                    @Override
-                    public String getBodyContentType() {
-                        return "application/json; charset=utf-8";
+                if (!date.isEmpty() && !time.isEmpty() && !duration.isEmpty()) {
+                    String url2 = "https://appointmentmobileapi.herokuapp.com/uploadSchedule/" + lecturerID;
+                    JSONObject jsonBody = new JSONObject();
+                    try {
+                        jsonBody.put("date", date);
+                        jsonBody.put("time", time);
+                        jsonBody.put("duration", duration);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
+                    final String requestBody = jsonBody.toString();
+                    System.out.println(requestBody);
+                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                            (Request.Method.POST, url2, null, new Response.Listener<JSONObject>() {
 
-                    @Override
-                    public byte[] getBody() {
-                        try {
-                            return requestBody == null ? null : requestBody.getBytes("utf-8");
-                        } catch (UnsupportedEncodingException uee) {
-                            VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                            return null;
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        Toast.makeText(UploadSchedule.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(UploadSchedule.this, LecturerMainPage.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        intent.putExtra("lecturerID", lecturerID);
+                                        intent.putExtra("role", "lecturer");
+                                        startActivity(intent);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    try {
+                                        byte[] htmlBodyBytes = error.networkResponse.data;
+                                        JSONObject errorRes =new JSONObject(new String(htmlBodyBytes));
+                                        Toast.makeText(UploadSchedule.this, errorRes.getString("message"), Toast.LENGTH_SHORT).show();
+                                        //System.out.println(errorRes.getString("status"));
+                                    } catch (Exception e) {
+                                        System.out.println(e.getMessage());
+                                    }
+                                }
+                            }) {
+                        @Override
+                        public String getBodyContentType() {
+                            return "application/json; charset=utf-8";
                         }
-                    }
-                };
-                VolleySingleton.getInstance(UploadSchedule.this).addToRequestQueue(jsonObjectRequest);
+
+                        @Override
+                        public byte[] getBody() {
+                            try {
+                                return requestBody == null ? null : requestBody.getBytes("utf-8");
+                            } catch (UnsupportedEncodingException uee) {
+                                VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                                return null;
+                            }
+                        }
+                    };
+                    VolleySingleton.getInstance(UploadSchedule.this).addToRequestQueue(jsonObjectRequest);
+                } else {
+                    Toast.makeText(UploadSchedule.this, "Missing Information.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
