@@ -70,8 +70,8 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/white"
                     android:ems="10"
-                    android:hint="Duration"
-                    android:inputType="number|textPassword"
+                    android:hint="Duration (minutes)"
+                    android:inputType="number"
                     android:textColor="@color/white" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
