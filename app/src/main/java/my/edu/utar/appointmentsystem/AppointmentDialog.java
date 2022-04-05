@@ -67,92 +67,105 @@ public class AppointmentDialog extends Dialog implements AdapterView.OnItemSelec
         if (schedules.length() == 0) {
             schedulesID.add("No Appointment Slot");
             spinnerArray.add("No Appointment Slot");
-        }
-        for (int i = 0; i < schedules.length(); i++) {
-            try {
-                JSONObject scheduleDetail = schedules.getJSONObject(i);
-                String scheduleID = scheduleDetail.getString("_id");
-                schedulesID.add(scheduleID);
-                String duration = scheduleDetail.getString("duration");
-                String dateTime = scheduleDetail.getString("dateTime");
-                dateTime = formatDateTime(dateTime);
-                spinnerArray.add(dateTime + " " + duration + " minutes");
-            } catch (JSONException | ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        ArrayAdapter ad = new ArrayAdapter(context, android.R.layout.simple_spinner_item, spinnerArray);
-        ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spin.setAdapter(ad);
-
-        // Submit detail
-        Button send_appointment = findViewById(R.id.send_appointment);
-        send_appointment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText newAppointmentTitle = findViewById(R.id.newAppointmentTitle);
-                EditText newAppointmentDesc = findViewById(R.id.newAppointmentDesc);
-                String url2 = "https://appointmentmobileapi.herokuapp.com/sentAppointmentRequest";
-                JSONObject jsonBody = new JSONObject();
+            Button send_appointment = findViewById(R.id.send_appointment);
+            send_appointment.setText("No Slot Available");
+            send_appointment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dismiss();
+                }
+            });
+            ArrayAdapter ad = new ArrayAdapter(context, R.layout.spinner_list, spinnerArray);
+            ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spin.setAdapter(ad);
+        }else{
+            for (int i = 0; i < schedules.length(); i++) {
                 try {
-                    jsonBody.put("studentID", studentID);
-                    jsonBody.put("lecturerID", lecturerID);
-                    jsonBody.put("title", newAppointmentTitle.getText().toString().trim());
-                    jsonBody.put("description", newAppointmentDesc.getText().toString().trim());
-                    jsonBody.put("scheduleID", selectedSchedule);
-                } catch (JSONException e) {
+                    JSONObject scheduleDetail = schedules.getJSONObject(i);
+                    String scheduleID = scheduleDetail.getString("_id");
+                    schedulesID.add(scheduleID);
+                    String duration = scheduleDetail.getString("duration");
+                    String dateTime = scheduleDetail.getString("dateTime");
+                    dateTime = formatDateTime(dateTime);
+                    spinnerArray.add(dateTime + " " + duration + " minutes");
+                } catch (JSONException | ParseException e) {
                     e.printStackTrace();
                 }
-                final String requestBody = jsonBody.toString();
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                        (Request.Method.POST, url2, null, new Response.Listener<JSONObject>() {
-
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                try {
-                                    Toast.makeText(context, response.getString("message"), Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(context, StudentMainPage.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    intent.putExtra("studentID", studentID);
-                                    intent.putExtra("role", "student");
-                                    context.startActivity(intent);
-                                    dismiss();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                try {
-                                    byte[] htmlBodyBytes = error.networkResponse.data;
-                                    JSONObject errorRes =new JSONObject(new String(htmlBodyBytes));
-                                    Toast.makeText(context, "Something Wrong", Toast.LENGTH_SHORT).show();
-                                    //System.out.println(errorRes.getString("status"));
-                                } catch (Exception e) {
-                                    System.out.println(e.getMessage());
-                                }
-                            }
-                        }) {
-                    @Override
-                    public String getBodyContentType() {
-                        return "application/json; charset=utf-8";
-                    }
-
-                    @Override
-                    public byte[] getBody() {
-                        try {
-                            return requestBody == null ? null : requestBody.getBytes("utf-8");
-                        } catch (UnsupportedEncodingException uee) {
-                            VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                            return null;
-                        }
-                    }
-                };
-                VolleySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
             }
-        });
+//            ArrayAdapter ad = new ArrayAdapter(context, android.R.layout.simple_spinner_item, spinnerArray);
+            ArrayAdapter ad = new ArrayAdapter(context, R.layout.spinner_list, spinnerArray);
+            ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spin.setAdapter(ad);
+
+            // Submit detail
+            Button send_appointment = findViewById(R.id.send_appointment);
+            send_appointment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    EditText newAppointmentTitle = findViewById(R.id.newAppointmentTitle);
+                    EditText newAppointmentDesc = findViewById(R.id.newAppointmentDesc);
+                    String url2 = "https://appointmentmobileapi.herokuapp.com/sentAppointmentRequest";
+                    JSONObject jsonBody = new JSONObject();
+                    try {
+                        jsonBody.put("studentID", studentID);
+                        jsonBody.put("lecturerID", lecturerID);
+                        jsonBody.put("title", newAppointmentTitle.getText().toString().trim());
+                        jsonBody.put("description", newAppointmentDesc.getText().toString().trim());
+                        jsonBody.put("scheduleID", selectedSchedule);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    final String requestBody = jsonBody.toString();
+                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                            (Request.Method.POST, url2, null, new Response.Listener<JSONObject>() {
+
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        Toast.makeText(context, response.getString("message"), Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(context, StudentMainPage.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        intent.putExtra("studentID", studentID);
+                                        intent.putExtra("role", "student");
+                                        context.startActivity(intent);
+                                        dismiss();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    try {
+                                        byte[] htmlBodyBytes = error.networkResponse.data;
+                                        JSONObject errorRes =new JSONObject(new String(htmlBodyBytes));
+                                        Toast.makeText(context, "Something Wrong", Toast.LENGTH_SHORT).show();
+                                        //System.out.println(errorRes.getString("status"));
+                                    } catch (Exception e) {
+                                        System.out.println(e.getMessage());
+                                    }
+                                }
+                            }) {
+                        @Override
+                        public String getBodyContentType() {
+                            return "application/json; charset=utf-8";
+                        }
+
+                        @Override
+                        public byte[] getBody() {
+                            try {
+                                return requestBody == null ? null : requestBody.getBytes("utf-8");
+                            } catch (UnsupportedEncodingException uee) {
+                                VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                                return null;
+                            }
+                        }
+                    };
+                    VolleySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
+                }
+            });
+        }
     }
 
     @Override

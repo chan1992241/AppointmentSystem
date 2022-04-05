@@ -20,24 +20,25 @@
             android:layout_height="wrap_content"
             android:text="Appointment Schedule:"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="20dp" />
 
         <Spinner
             android:id="@+id/scheduleSpinner"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/white"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Appointment Title:"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="20dp" />
 
 <!--        <EditText-->
@@ -52,7 +53,9 @@
         <EditText
             android:id="@+id/newAppointmentTitle"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/white"
             />
 
         <TextView
@@ -60,7 +63,8 @@
             android:layout_height="wrap_content"
             android:text="Appointment Description:"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/white"
             android:textSize="20dp" />
 
 <!--        <EditText-->
@@ -77,9 +81,17 @@
 <!--            android:padding="5dp"-->
 <!--            android:textColor="@color/white" />-->
         <EditText
-            android:id="@+id/newAppointmentDesc"
+            android:inputType="textMultiLine"
+            android:lines="6"
+            android:minLines="6"
+            android:gravity="top|start"
+            android:maxLines="8"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:scrollbars="vertical"
+            android:id="@+id/newAppointmentDesc"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/white"
             />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
