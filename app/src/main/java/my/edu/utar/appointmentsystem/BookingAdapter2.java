@@ -3,11 +3,14 @@ package my.edu.utar.appointmentsystem;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.provider.CalendarContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,7 +68,10 @@ public class BookingAdapter2 extends ArrayAdapter<String> {
         TextView studentDuration = (TextView) bookingEntry.findViewById(R.id.student_duration);
         TextView lecturerName = (TextView) bookingEntry.findViewById(R.id.lecturer_name);
         Button studentActionBtn = (Button)  bookingEntry.findViewById(R.id.student_action_btn);
-
+        ImageButton studentAddEvent = (ImageButton) bookingEntry.findViewById(R.id.student_add_event);
+        if (appointment.getStatus().equals("accepted")) {
+            studentAddEvent.setVisibility(View.VISIBLE);
+        }
         studentAppointmentTitle.setText(appointment.getTitle());
         try {
             studentTime.setText(formatDateTime(appointment.getSchedule().getDateTime()));
@@ -82,7 +88,6 @@ public class BookingAdapter2 extends ArrayAdapter<String> {
         studentActionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Android Small - 15
                 switch (view.getTag(R.id.appointmentStatus).toString()) {
                     case "accepted":
                         AlertDialog.Builder builder = new AlertDialog.Builder((context));
@@ -172,8 +177,37 @@ public class BookingAdapter2 extends ArrayAdapter<String> {
                 }
             }
         });
-
+        studentAddEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_INSERT);
+                    intent.setData(CalendarContract.Events.CONTENT_URI);
+                    intent.putExtra(CalendarContract.Events.TITLE, appointment.getTitle());
+                    intent.putExtra(CalendarContract.Events.DESCRIPTION, appointment.getDescription() + "\n\nLecturer: " + appointment.getLecturer().getName());
+                    intent.putExtra(CalendarContract.Events.ALL_DAY, false);
+                    intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, getTimeInMillis(appointment.getSchedule().getDateTime()));
+                    intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, getTimeInMillis(appointment.getSchedule().getDateTime()) + Integer.parseInt(appointment.getSchedule().getDuration()) * 60 *  1000);
+                    if (intent.resolveActivity(context.getPackageManager()) != null) {
+                        context.startActivity(intent);
+                    } else {
+                        Toast.makeText(context, "There is no calendar app to add event.", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         return bookingEntry;
+    }
+
+    private long getTimeInMillis(String dateTime) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        Date date = sdf.parse(dateTime);
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.HOUR, 8);
+        return c.getTimeInMillis();
     }
 
     private String formatDateTime(String dateTime) throws ParseException {

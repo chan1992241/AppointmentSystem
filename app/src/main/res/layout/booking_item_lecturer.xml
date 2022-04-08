@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -38,9 +39,26 @@
         android:textSize="12sp"
         android:paddingVertical="2dp"/>
 
-    <Button
-        android:id="@+id/lecturer_action_btn"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lecturer_action_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/lecturer_action_btn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@id/lecturer_action_container"
+            app:layout_constraintTop_toTopOf="@id/lecturer_action_container"
+            app:layout_constraintBottom_toBottomOf="@id/lecturer_action_container"/>
+        <ImageButton
+            android:id="@+id/lecturer_add_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="@id/lecturer_action_container"
+            app:layout_constraintTop_toTopOf="@id/lecturer_action_container"
+            app:layout_constraintBottom_toBottomOf="@id/lecturer_action_container"
+            android:background="@drawable/ic_round_event"
+            android:visibility="gone"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

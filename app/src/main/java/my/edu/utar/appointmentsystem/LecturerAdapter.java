@@ -71,8 +71,18 @@ public class LecturerAdapter extends ArrayAdapter<String> {
         lecturerEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppointmentDialog appointmentDialog = new AppointmentDialog(context, finalLecturerDetail, lecturer.getID(), Student_ID);
-                appointmentDialog.show();
+                JSONArray schedules = null;
+                try {
+                    schedules = finalLecturerDetail.getJSONArray("schedules");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (schedules.length() == 0) {
+                    Toast.makeText(context, "No Time Slot Available", Toast.LENGTH_SHORT).show();
+                } else {
+                    AppointmentDialog appointmentDialog = new AppointmentDialog(context, finalLecturerDetail, lecturer.getID(), Student_ID);
+                    appointmentDialog.show();
+                }
             }
         });
 
