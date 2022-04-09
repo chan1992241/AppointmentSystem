@@ -88,6 +88,14 @@ public class BookingAdapter2 extends ArrayAdapter<String> {
         studentActionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String strPositive = "";
+
+                if(view.getTag(R.id.appointmentStatus).toString().equals("pending")){
+                    strPositive = "Call Off";
+                }
+                else{
+                    strPositive = "Delete";
+                }
                 switch (view.getTag(R.id.appointmentStatus).toString()) {
                     case "accepted":
                         AlertDialog.Builder builder = new AlertDialog.Builder((context));
@@ -111,7 +119,7 @@ public class BookingAdapter2 extends ArrayAdapter<String> {
                         builder2.setMessage(view.getTag(R.id.appointmentDescription).toString());
                         builder2.setCancelable(false);
 
-                        builder2.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                        builder2.setPositiveButton( strPositive, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 String url2 = "https://appointmentmobileapi.herokuapp.com/deleteAppointment/" + view.getTag(R.id.appointmentID).toString();

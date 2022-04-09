@@ -63,6 +63,9 @@ public class StudentMainPage extends AppCompatActivity {
         intent3.putExtra("studentID", studentID);
         menu.add("My booking").setIntent(intent3);
 
+        Intent intent4 = new Intent(StudentMainPage.this, roleSelection.class);
+        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        menu.add("Logout").setIntent(intent4);
 
         return true;
     }

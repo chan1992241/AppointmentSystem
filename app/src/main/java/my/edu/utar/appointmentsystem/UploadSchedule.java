@@ -191,6 +191,14 @@ public class UploadSchedule extends AppCompatActivity {
         intent3.putExtra("lecturerID", lecturerID);
         menu.add("My booking").setIntent(intent3);
 
+        Intent intent5 = new Intent(UploadSchedule.this, ManageSchedule.class);
+        intent5.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent5.putExtra("lecturerID", lecturerID);
+        menu.add("Manage Schedule").setIntent(intent5);
+
+        Intent intent4 = new Intent(UploadSchedule.this, roleSelection.class);
+        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        menu.add("Logout").setIntent(intent4);
 
         return true;
 
