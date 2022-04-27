@@ -43,29 +43,12 @@ public class MakeAppointment extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-
-
+        String role = getIntent().getStringExtra("role");
         Intent intent1 = getIntent();
-        String studentID = intent1.getStringExtra("studentID");
+        String userID = intent1.getStringExtra("lecturerID") == null ? intent1.getStringExtra("studentID"):intent1.getStringExtra("lecturerID");
 
-        Intent intent = new Intent(MakeAppointment.this, StudentUpcoming.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("studentID", studentID);
-        menu.add("Upcoming Booking").setIntent(intent);
-
-        Intent intent2 = new Intent(MakeAppointment.this, MakeAppointment.class);
-        intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent2.putExtra("studentID", studentID);
-        menu.add("Make Appointment").setIntent(intent2);
-
-        Intent intent3 = new Intent(MakeAppointment.this, StudentMainPage.class);
-        intent3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent3.putExtra("studentID", studentID);
-        menu.add("My booking").setIntent(intent3);
-
-        Intent intent4 = new Intent(MakeAppointment.this, roleSelection.class);
-        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        menu.add("Logout").setIntent(intent4);
+        LecturerOptionMenu lecturerOptionMenu = new LecturerOptionMenu(MakeAppointment.this, menu, userID, role);
+        lecturerOptionMenu.build();
 
         return true;
     }

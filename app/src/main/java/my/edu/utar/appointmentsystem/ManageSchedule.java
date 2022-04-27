@@ -49,37 +49,16 @@ public class ManageSchedule extends AppCompatActivity {
         container = findViewById(R.id.schedules_container);
         getData();
     }
+    // inflate menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         super.onCreateOptionsMenu(menu);
-        Intent intent = getIntent();
-        String lecturerID = intent.getStringExtra("lecturerID");
-        System.out.println(lecturerID);
+        String role = getIntent().getStringExtra("role");
+        Intent intent1 = getIntent();
+        String userID = intent1.getStringExtra("lecturerID") == null ? intent1.getStringExtra("studentID"):intent1.getStringExtra("lecturerID");
 
-        Intent intent1 = new Intent(ManageSchedule.this, LecturerUpcoming.class);
-        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent1.putExtra("lecturerID", lecturerID);
-        menu.add("Upcoming Booking").setIntent(intent1);
-
-        Intent intent2 = new Intent(ManageSchedule.this, UploadSchedule.class);
-        intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent2.putExtra("lecturerID", lecturerID);
-        menu.add("Upload Schedule").setIntent(intent2);
-
-        Intent intent3 = new Intent(ManageSchedule.this, LecturerMainPage.class);
-        intent3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent3.putExtra("lecturerID", lecturerID);
-        menu.add("My booking").setIntent(intent3);
-
-        Intent intent5 = new Intent(ManageSchedule.this, ManageSchedule.class);
-        intent5.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent5.putExtra("lecturerID", lecturerID);
-        menu.add("Manage Schedule").setIntent(intent5);
-
-        Intent intent4 = new Intent(ManageSchedule.this, roleSelection.class);
-        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        menu.add("Logout").setIntent(intent4);
+        LecturerOptionMenu lecturerOptionMenu = new LecturerOptionMenu(ManageSchedule.this, menu, userID, role);
+        lecturerOptionMenu.build();
 
         return true;
     }

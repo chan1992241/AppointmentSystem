@@ -43,34 +43,11 @@ public class LecturerMainPage extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        //getMenuInflater().inflate(R.menu.main,menu);
         Intent intent1 = getIntent();
         String lecturerID = intent1.getStringExtra("lecturerID");
 
-        Intent intent = new Intent(LecturerMainPage.this, LecturerUpcoming.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("lecturerID", lecturerID);
-        menu.add("Upcoming Booking").setIntent(intent);
-
-        Intent intent2 = new Intent(LecturerMainPage.this, UploadSchedule.class);
-        intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent2.putExtra("lecturerID", lecturerID);
-        menu.add("Upload Schedule").setIntent(intent2);
-
-        Intent intent3 = new Intent(LecturerMainPage.this, LecturerMainPage.class);
-        intent3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent3.putExtra("lecturerID", lecturerID);
-        menu.add("My booking").setIntent(intent3);
-
-        Intent intent5 = new Intent(LecturerMainPage.this, ManageSchedule.class);
-        intent5.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent5.putExtra("lecturerID", lecturerID);
-        menu.add("Manage Schedule").setIntent(intent5);
-
-        Intent intent4 = new Intent(LecturerMainPage.this, roleSelection.class);
-        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        menu.add("Logout").setIntent(intent4);
-
+        LecturerOptionMenu lecturerOptionMenu = new LecturerOptionMenu(LecturerMainPage.this, menu, lecturerID, "lecturer");
+        lecturerOptionMenu.build();
 
         return true;
     }
