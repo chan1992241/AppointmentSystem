@@ -34,9 +34,13 @@ public class UserProfile extends AppCompatActivity {
         Intent intent1 = getIntent();
         String userID = intent1.getStringExtra("lecturerID") == null ? intent1.getStringExtra("studentID"):intent1.getStringExtra("lecturerID");
 
-        LecturerOptionMenu lecturerOptionMenu = new LecturerOptionMenu(UserProfile.this, menu, userID, role);
-        lecturerOptionMenu.build();
-
+        if (role.equals("lecturer")){
+            LecturerOptionMenu lecturerOptionMenu = new LecturerOptionMenu(UserProfile.this, menu, userID, role);
+            lecturerOptionMenu.build();
+        }else{
+            StudentOptionMenu studentOptionMenu = new StudentOptionMenu(UserProfile.this, menu, userID, role);
+            studentOptionMenu.build();
+        }
         return true;
     }
 

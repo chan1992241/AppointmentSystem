@@ -43,13 +43,11 @@ public class MakeAppointment extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        String role = getIntent().getStringExtra("role");
         Intent intent1 = getIntent();
-        String userID = intent1.getStringExtra("lecturerID") == null ? intent1.getStringExtra("studentID"):intent1.getStringExtra("lecturerID");
-
-        LecturerOptionMenu lecturerOptionMenu = new LecturerOptionMenu(MakeAppointment.this, menu, userID, role);
-        lecturerOptionMenu.build();
-
+        String studentID = intent1.getStringExtra("studentID");
+        String role = intent1.getStringExtra("role");
+        StudentOptionMenu studentOptionMenu = new StudentOptionMenu(MakeAppointment.this, menu, studentID,role);
+        studentOptionMenu.build();
         return true;
     }
 

@@ -43,30 +43,11 @@ public class StudentMainPage extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-
-
         Intent intent1 = getIntent();
         String studentID = intent1.getStringExtra("studentID");
-
-        Intent intent = new Intent(StudentMainPage.this, StudentUpcoming.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("studentID", studentID);
-        menu.add("Upcoming Booking").setIntent(intent);
-
-        Intent intent2 = new Intent(StudentMainPage.this, MakeAppointment.class);
-        intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent2.putExtra("studentID", studentID);
-        menu.add("Make Appointment").setIntent(intent2);
-
-        Intent intent3 = new Intent(StudentMainPage.this, StudentMainPage.class);
-        intent3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent3.putExtra("studentID", studentID);
-        menu.add("My booking").setIntent(intent3);
-
-        Intent intent4 = new Intent(StudentMainPage.this, roleSelection.class);
-        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        menu.add("Logout").setIntent(intent4);
-
+        String role = intent1.getStringExtra("role");
+        StudentOptionMenu studentOptionMenu = new StudentOptionMenu(StudentMainPage.this, menu, studentID,role);
+        studentOptionMenu.build();
         return true;
     }
 
