@@ -5,7 +5,7 @@
     android:id="@+id/activity_lecturer_upcoming"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LecturerUpcoming"
+    tools:context=".LecturerUser.LecturerUpcoming"
     android:forceHasOverlappingRendering="true">
 
     <androidx.cardview.widget.CardView

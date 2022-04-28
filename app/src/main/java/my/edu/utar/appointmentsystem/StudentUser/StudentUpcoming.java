@@ -1,4 +1,4 @@
-package my.edu.utar.appointmentsystem;
+package my.edu.utar.appointmentsystem.StudentUser;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +25,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import my.edu.utar.appointmentsystem.MISC.Appointment;
+import my.edu.utar.appointmentsystem.R;
+import my.edu.utar.appointmentsystem.Volley.VolleySingleton;
 
 public class StudentUpcoming extends AppCompatActivity {
 
@@ -83,7 +87,7 @@ public class StudentUpcoming extends AppCompatActivity {
                             } else {
                                 Log.e("Appointment Length", "formatResponse: " + appointmentData.size());
                                 ListView bookingList = (ListView) findViewById(R.id.student_upcoming_list);
-                                BookingAdapter2 bookingAdapter = new BookingAdapter2(StudentUpcoming.this, appointmentData, studentID);
+                                StudentBookingAdapter bookingAdapter = new StudentBookingAdapter(StudentUpcoming.this, appointmentData, studentID);
                                 bookingList.setAdapter(bookingAdapter);
                             }
                         } catch (JSONException e) {

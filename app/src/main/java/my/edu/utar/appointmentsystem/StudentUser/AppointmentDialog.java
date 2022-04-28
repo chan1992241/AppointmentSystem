@@ -1,4 +1,4 @@
-package my.edu.utar.appointmentsystem;
+package my.edu.utar.appointmentsystem.StudentUser;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -27,13 +27,13 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+
+import my.edu.utar.appointmentsystem.R;
+import my.edu.utar.appointmentsystem.Volley.VolleySingleton;
 
 public class AppointmentDialog extends Dialog implements AdapterView.OnItemSelectedListener {
     Context context;

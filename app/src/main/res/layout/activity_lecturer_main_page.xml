@@ -5,7 +5,7 @@
     android:id="@+id/activity_lecturer_main_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LecturerMainPage"
+    tools:context=".LecturerUser.LecturerMainPage"
     android:forceHasOverlappingRendering="true">
 
     <androidx.cardview.widget.CardView

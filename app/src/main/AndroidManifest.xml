@@ -14,22 +14,22 @@
         android:theme="@style/Theme.AppointmentSystem"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".UserProfile"
+            android:name=".User.UserProfile"
             android:exported="false" />
         <activity
-            android:name=".ManageSchedule"
+            android:name=".LecturerUser.ManageSchedule"
             android:exported="false" />
         <activity
-            android:name=".MakeAppointment"
+            android:name=".StudentUser.MakeAppointment"
             android:exported="false" />
         <activity
-            android:name=".StudentUpcoming"
+            android:name=".StudentUser.StudentUpcoming"
             android:exported="false" />
         <activity
-            android:name=".StudentMainPage"
+            android:name=".StudentUser.StudentMainPage"
             android:exported="false" />
         <activity
-            android:name=".SplashScreen"
+            android:name=".User.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,22 +38,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LecturerUpcoming"
+            android:name=".LecturerUser.LecturerUpcoming"
             android:exported="false" />
         <activity
-            android:name=".UploadSchedule"
+            android:name=".LecturerUser.UploadSchedule"
             android:exported="false" />
         <activity
-            android:name=".LecturerMainPage"
+            android:name=".LecturerUser.LecturerMainPage"
             android:exported="false" />
         <activity
-            android:name=".LecturerLogin"
+            android:name=".LecturerUser.LecturerLogin"
             android:exported="false" />
         <activity
-            android:name=".StudentLogin"
+            android:name=".StudentUser.StudentLogin"
             android:exported="false" />
         <activity
-            android:name=".roleSelection"
+            android:name=".User.RoleSelection"
             android:exported="true">
 
             <!-- <intent-filter> -->

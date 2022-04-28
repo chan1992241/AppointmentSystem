@@ -1,4 +1,4 @@
-package my.edu.utar.appointmentsystem;
+package my.edu.utar.appointmentsystem.MISC;
 
 import org.json.JSONException;
 import org.json.JSONObject;

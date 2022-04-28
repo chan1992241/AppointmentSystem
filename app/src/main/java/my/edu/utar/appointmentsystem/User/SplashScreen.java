@@ -1,4 +1,4 @@
-package my.edu.utar.appointmentsystem;
+package my.edu.utar.appointmentsystem.User;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import my.edu.utar.appointmentsystem.R;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -35,7 +37,7 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreen.this, roleSelection.class);
+                Intent intent = new Intent(SplashScreen.this, RoleSelection.class);
                 startActivity(intent);
                 finish();
             }

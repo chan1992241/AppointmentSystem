@@ -1,8 +1,11 @@
-package my.edu.utar.appointmentsystem;
+package my.edu.utar.appointmentsystem.StudentUser;
 
 import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
+
+import my.edu.utar.appointmentsystem.User.UserProfile;
+import my.edu.utar.appointmentsystem.User.RoleSelection;
 
 public class StudentOptionMenu {
     private Context context;
@@ -39,7 +42,7 @@ public class StudentOptionMenu {
         intent5.putExtra("role", "student");
         menu.add("User Profile").setIntent(intent5);
 
-        Intent intent4 = new Intent(context, roleSelection.class);
+        Intent intent4 = new Intent(context, RoleSelection.class);
         intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent4.putExtra("role", "student");
         menu.add("Logout").setIntent(intent4);

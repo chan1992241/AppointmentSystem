@@ -1,4 +1,4 @@
-package my.edu.utar.appointmentsystem;
+package my.edu.utar.appointmentsystem.MISC;
 
 import org.json.JSONArray;
 import org.json.JSONException;

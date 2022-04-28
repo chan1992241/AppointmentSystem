@@ -1,8 +1,4 @@
-package my.edu.utar.appointmentsystem;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.LinearLayoutCompat;
+package my.edu.utar.appointmentsystem.LecturerUser;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +11,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -26,16 +26,20 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class StudentMainPage extends AppCompatActivity {
+import my.edu.utar.appointmentsystem.MISC.Appointment;
+import my.edu.utar.appointmentsystem.R;
+import my.edu.utar.appointmentsystem.Volley.VolleySingleton;
+
+public class LecturerMainPage extends AppCompatActivity {
 
     private ArrayList<Appointment> appointmentData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_main_page);
+        setContentView(R.layout.activity_lecturer_main_page);
         // customize action bar
-        getSupportActionBar().setTitle("Appointment With Lecturer");
+        getSupportActionBar().setTitle("Appointment With Student");
         getData();
     }
 
@@ -44,10 +48,11 @@ public class StudentMainPage extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         Intent intent1 = getIntent();
-        String studentID = intent1.getStringExtra("studentID");
-        String role = intent1.getStringExtra("role");
-        StudentOptionMenu studentOptionMenu = new StudentOptionMenu(StudentMainPage.this, menu, studentID,role);
-        studentOptionMenu.build();
+        String lecturerID = intent1.getStringExtra("lecturerID");
+
+        LecturerOptionMenu lecturerOptionMenu = new LecturerOptionMenu(LecturerMainPage.this, menu, lecturerID, "lecturer");
+        lecturerOptionMenu.build();
+
         return true;
     }
 
@@ -58,11 +63,12 @@ public class StudentMainPage extends AppCompatActivity {
     }
 
     private void getData() {
-        LinearLayoutCompat progressBar = findViewById(R.id.student_booking_progressBar);
+        LinearLayoutCompat progressBar = findViewById(R.id.booking_ProgressBar);
         progressBar.setVisibility(View.VISIBLE);
         Intent intent = getIntent();
-        String studentID = intent.getStringExtra("studentID");
-        String url2 = "https://appointmentmobileapi.herokuapp.com/listAllBookingStudent/" + studentID;
+        String lecturerID = intent.getStringExtra("lecturerID");
+        String url2 = "https://appointmentmobileapi.herokuapp.com/listAllBookingLecturer/" + lecturerID;
+//        String url2 = "https://appointmentmobileapi.herokuapp.com/listAllBookingLecturer/623f0b0f53bea9bf72cc44ae";
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
                 (Request.Method.GET, url2, null, new Response.Listener<JSONArray>() {
 
@@ -73,17 +79,17 @@ public class StudentMainPage extends AppCompatActivity {
                             appointmentData = formatResponse(response);
                             if (appointmentData == null) {
                                 Log.e("Appointment Length", "formatResponse: null");
-                                RelativeLayout rl = (RelativeLayout) findViewById(R.id.activity_student_main_page);
-                                LinearLayoutCompat ll = (LinearLayoutCompat) rl.findViewById(R.id.student_booking_container);
-                                TextView tv = new TextView(StudentMainPage.this);
+                                RelativeLayout rl = (RelativeLayout) findViewById(R.id.activity_lecturer_main_page);
+                                LinearLayoutCompat ll = (LinearLayoutCompat) rl.findViewById(R.id.lecturer_booking_container);
+                                TextView tv = new TextView(LecturerMainPage.this);
                                 tv.setText("No Booking");
                                 tv.setGravity(Gravity.CENTER);
                                 ll.setGravity(Gravity.CENTER);
                                 ll.addView(tv);
                             } else {
                                 Log.e("Appointment Length", "formatResponse: " + appointmentData.size());
-                                ListView bookingList = (ListView) findViewById(R.id.student_booking_list);
-                                BookingAdapter2 bookingAdapter = new BookingAdapter2(StudentMainPage.this, appointmentData, studentID);
+                                ListView bookingList = (ListView) findViewById(R.id.lecturer_booking_list);
+                                LectureBookingAdapter bookingAdapter = new LectureBookingAdapter(LecturerMainPage.this, appointmentData, lecturerID);
                                 bookingList.setAdapter(bookingAdapter);
                             }
                         } catch (JSONException e) {
@@ -109,7 +115,7 @@ public class StudentMainPage extends AppCompatActivity {
                 return "application/json; charset=utf-8";
             }
         };
-        VolleySingleton.getInstance(StudentMainPage.this).addToRequestQueue(jsonObjectRequest);
+        VolleySingleton.getInstance(LecturerMainPage.this).addToRequestQueue(jsonObjectRequest);
     }
 
     private ArrayList<Appointment> formatResponse(JSONArray response) throws JSONException {

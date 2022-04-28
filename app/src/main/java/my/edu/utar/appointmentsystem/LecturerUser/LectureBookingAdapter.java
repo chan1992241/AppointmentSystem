@@ -1,11 +1,9 @@
-package my.edu.utar.appointmentsystem;
+package my.edu.utar.appointmentsystem.LecturerUser;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.CalendarContract;
-import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,19 +30,20 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
-public class BookingAdapter extends ArrayAdapter<String> {
+import my.edu.utar.appointmentsystem.MISC.Appointment;
+import my.edu.utar.appointmentsystem.R;
+import my.edu.utar.appointmentsystem.Volley.VolleySingleton;
+
+public class LectureBookingAdapter extends ArrayAdapter<String> {
     Context context;
     ArrayList<Appointment> data;
     String Lecture_ID;
 
-    public BookingAdapter(@NonNull Context c, ArrayList<Appointment> data, String Lecture_ID) {
+    public LectureBookingAdapter(@NonNull Context c, ArrayList<Appointment> data, String Lecture_ID) {
         super(c, android.R.layout.simple_list_item_1, new String[data.size()]);
 
         this.context = c;

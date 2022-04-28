@@ -1,4 +1,4 @@
-package my.edu.utar.appointmentsystem;
+package my.edu.utar.appointmentsystem.User;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class roleSelection extends AppCompatActivity {
+import my.edu.utar.appointmentsystem.LecturerUser.LecturerLogin;
+import my.edu.utar.appointmentsystem.R;
+import my.edu.utar.appointmentsystem.StudentUser.StudentLogin;
+
+public class RoleSelection extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +23,7 @@ public class roleSelection extends AppCompatActivity {
         studentRole.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(roleSelection.this, StudentLogin.class);
+                Intent intent = new Intent(RoleSelection.this, StudentLogin.class);
                 intent.putExtra("role", "student");
                 startActivity(intent);
             }
@@ -27,7 +31,7 @@ public class roleSelection extends AppCompatActivity {
         lecturerRole.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(roleSelection.this, LecturerLogin.class);
+                Intent intent = new Intent(RoleSelection.this, LecturerLogin.class);
                 intent.putExtra("role", "lecturer");
                 startActivity(intent);
             }

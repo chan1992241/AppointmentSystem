@@ -1,4 +1,4 @@
-package my.edu.utar.appointmentsystem;
+package my.edu.utar.appointmentsystem.LecturerUser;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -29,6 +29,9 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.Locale;
+
+import my.edu.utar.appointmentsystem.R;
+import my.edu.utar.appointmentsystem.Volley.VolleySingleton;
 
 public class UploadSchedule extends AppCompatActivity {
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingHorizontal="30dp"
-    tools:context=".roleSelection">
+    tools:context=".User.RoleSelection">
     <androidx.cardview.widget.CardView
         android:id="@+id/container"
         android:layout_width="match_parent"

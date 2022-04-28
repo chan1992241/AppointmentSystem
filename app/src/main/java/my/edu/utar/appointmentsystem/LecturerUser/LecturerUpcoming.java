@@ -1,8 +1,4 @@
-package my.edu.utar.appointmentsystem;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.LinearLayoutCompat;
+package my.edu.utar.appointmentsystem.LecturerUser;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +11,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -26,16 +26,20 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MakeAppointment extends AppCompatActivity {
+import my.edu.utar.appointmentsystem.MISC.Appointment;
+import my.edu.utar.appointmentsystem.R;
+import my.edu.utar.appointmentsystem.Volley.VolleySingleton;
 
-    private ArrayList<Lecturer> lecturerData;
+public class LecturerUpcoming extends AppCompatActivity {
+
+    private ArrayList<Appointment> appointmentData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_make_appointment);
+        setContentView(R.layout.activity_lecturer_upcoming);
         // customize action bar
-        getSupportActionBar().setTitle("Make Appointment");
+        getSupportActionBar().setTitle("Appointment With Student");
         getData();
     }
 
@@ -43,11 +47,13 @@ public class MakeAppointment extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
+        String role = getIntent().getStringExtra("role");
         Intent intent1 = getIntent();
-        String studentID = intent1.getStringExtra("studentID");
-        String role = intent1.getStringExtra("role");
-        StudentOptionMenu studentOptionMenu = new StudentOptionMenu(MakeAppointment.this, menu, studentID,role);
-        studentOptionMenu.build();
+        String userID = intent1.getStringExtra("lecturerID") == null ? intent1.getStringExtra("studentID"):intent1.getStringExtra("lecturerID");
+
+        LecturerOptionMenu lecturerOptionMenu = new LecturerOptionMenu(LecturerUpcoming.this, menu, userID, role);
+        lecturerOptionMenu.build();
+
         return true;
     }
 
@@ -58,34 +64,34 @@ public class MakeAppointment extends AppCompatActivity {
     }
 
     private void getData() {
-        LinearLayoutCompat progressBar = findViewById(R.id.available_lecturer_progressBar);
+        LinearLayoutCompat progressBar = findViewById(R.id.upcoming_ProgressBar);
         progressBar.setVisibility(View.VISIBLE);
         Intent intent = getIntent();
-        String studentID = intent.getStringExtra("studentID");
-        String url2 = "https://appointmentmobileapi.herokuapp.com/listAllLecturer";
+        String lecturerID = intent.getStringExtra("lecturerID");
+        String url2 = "https://appointmentmobileapi.herokuapp.com/listUpcomingBookingLecturer/" + lecturerID;
+//        String url2 = "https://appointmentmobileapi.herokuapp.com/listUpcomingBookingLecturer/623f0b0f53bea9bf72cc44ae";
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
                 (Request.Method.GET, url2, null, new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {
                         progressBar.setVisibility(View.GONE);
-//                        Log.e("Lecturer", "onResponse: " + response.toString());
                         try {
-                            lecturerData = formatResponse(response);
-                            if (lecturerData == null) {
-                                Log.e("Lecturer Length", "formatResponse: null");
-                                RelativeLayout rl = (RelativeLayout) findViewById(R.id.activity_make_appointment);
-                                LinearLayoutCompat ll = (LinearLayoutCompat) rl.findViewById(R.id.available_lecturer_container);
-                                TextView tv = new TextView(MakeAppointment.this);
-                                tv.setText("No Available Lecturer");
+                            appointmentData = formatResponse(response);
+                            if (appointmentData == null) {
+                                Log.e("Appointment Length", "formatResponse: null");
+                                RelativeLayout rl = (RelativeLayout) findViewById(R.id.activity_lecturer_upcoming);
+                                LinearLayoutCompat ll = (LinearLayoutCompat) rl.findViewById(R.id.lecturer_upcoming_container);
+                                TextView tv = new TextView(LecturerUpcoming.this);
+                                tv.setText("No Upcoming Booking");
                                 tv.setGravity(Gravity.CENTER);
                                 ll.setGravity(Gravity.CENTER);
                                 ll.addView(tv);
                             } else {
-                                Log.e("Lecturer Length", "formatResponse: " + lecturerData.size());
-                                ListView bookingList = (ListView) findViewById(R.id.available_lecturer_list);
-                                LecturerAdapter lecturerAdapter = new LecturerAdapter(MakeAppointment.this, lecturerData, studentID, response);
-                                bookingList.setAdapter(lecturerAdapter);
+                                Log.e("Appointment Length", "formatResponse: " + appointmentData.size());
+                                ListView bookingList = (ListView) findViewById(R.id.lecturer_upcoming_list);
+                                LectureBookingAdapter bookingAdapter = new LectureBookingAdapter(LecturerUpcoming.this, appointmentData, lecturerID);
+                                bookingList.setAdapter(bookingAdapter);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -110,17 +116,17 @@ public class MakeAppointment extends AppCompatActivity {
                 return "application/json; charset=utf-8";
             }
         };
-        VolleySingleton.getInstance(MakeAppointment.this).addToRequestQueue(jsonObjectRequest);
+        VolleySingleton.getInstance(LecturerUpcoming.this).addToRequestQueue(jsonObjectRequest);
     }
 
-    private ArrayList<Lecturer> formatResponse(JSONArray response) throws JSONException {
-        // format each lecturer into Lecturer class
-        // place all Lecturer into ArrayList<Lecturer>
-        Log.e("Lecturer Length", "formatResponse: " + response.length());
-        ArrayList<Lecturer> appointments = new ArrayList<Lecturer>();
+    private ArrayList<Appointment> formatResponse(JSONArray response) throws JSONException {
+        // format each appointment into Appointment class
+        // place all booking into ArrayList<Appointment>
+        Log.e("Response Length", "formatResponse: " + response.length());
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>();
         for (int i = 0 ; i < response.length(); i++) {
             JSONObject obj = response.getJSONObject(i);
-            appointments.add(new Lecturer(obj));
+            appointments.add(new Appointment(obj));
         }
 
         if (!appointments.isEmpty()) {
