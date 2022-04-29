@@ -36,6 +36,7 @@ import java.util.Date;
 
 import my.edu.utar.appointmentsystem.MISC.Appointment;
 import my.edu.utar.appointmentsystem.R;
+import my.edu.utar.appointmentsystem.Utils.DateTimeFormater;
 import my.edu.utar.appointmentsystem.Volley.VolleySingleton;
 
 public class StudentBookingAdapter extends ArrayAdapter<String> {
@@ -74,7 +75,7 @@ public class StudentBookingAdapter extends ArrayAdapter<String> {
         }
         studentAppointmentTitle.setText(appointment.getTitle());
         try {
-            studentTime.setText(formatDateTime(appointment.getSchedule().getDateTime()));
+            studentTime.setText(DateTimeFormater.formatDateTime(appointment.getSchedule().getDateTime()));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -194,8 +195,8 @@ public class StudentBookingAdapter extends ArrayAdapter<String> {
                     intent.putExtra(CalendarContract.Events.TITLE, appointment.getTitle());
                     intent.putExtra(CalendarContract.Events.DESCRIPTION, appointment.getDescription() + "\n\nLecturer: " + appointment.getLecturer().getName());
                     intent.putExtra(CalendarContract.Events.ALL_DAY, false);
-                    intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, getTimeInMillis(appointment.getSchedule().getDateTime()));
-                    intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, getTimeInMillis(appointment.getSchedule().getDateTime()) + Integer.parseInt(appointment.getSchedule().getDuration()) * 60 *  1000);
+                    intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, DateTimeFormater.getTimeInMillis(appointment.getSchedule().getDateTime()));
+                    intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, DateTimeFormater.getTimeInMillis(appointment.getSchedule().getDateTime()) + Integer.parseInt(appointment.getSchedule().getDuration()) * 60 *  1000);
                     if (intent.resolveActivity(context.getPackageManager()) != null) {
                         context.startActivity(intent);
                     } else {
@@ -207,31 +208,5 @@ public class StudentBookingAdapter extends ArrayAdapter<String> {
             }
         });
         return bookingEntry;
-    }
-
-    private long getTimeInMillis(String dateTime) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        Date date = sdf.parse(dateTime);
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-        c.add(Calendar.HOUR, 8);
-        return c.getTimeInMillis();
-    }
-
-    private String formatDateTime(String dateTime) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        Date date = sdf.parse(dateTime);
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-        c.add(Calendar.HOUR, 8);
-        Date newDate = c.getTime();
-        sdf.applyPattern("EEEE (dd-MM-yyyy) h:mm a");
-        String newDateString = sdf.format(newDate);
-        return newDateString;
-//        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
-//        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("EEEE (dd-MM-yyyy) h:mm a", Locale.getDefault());
-//        LocalDateTime datetime = LocalDateTime.parse(dateTime, inputFormatter);
-//        String formattedDatetime = outputFormatter.format(datetime);
-//        return formattedDatetime;
     }
 }

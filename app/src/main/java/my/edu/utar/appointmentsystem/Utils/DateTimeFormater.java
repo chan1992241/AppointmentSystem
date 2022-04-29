@@ -17,4 +17,12 @@ public class DateTimeFormater {
         String newDateString = sdf.format(newDate);
         return newDateString;
     }
+    public static long getTimeInMillis(String dateTime) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        Date date = sdf.parse(dateTime);
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.HOUR, 8);
+        return c.getTimeInMillis();
+    }
 }
